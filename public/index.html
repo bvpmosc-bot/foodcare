@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+     <meta name="theme-color" content="#1A4081">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Anark chief</title>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script>
+    </script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.2.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.2.1/firebaseui.css" />
+    <script type="text/javascript">
+var config = {
+    apiKey: "AIzaSyCYLMwNAllitrImmpvIuIG7pQjIx80YWE8",
+    authDomain: "anark-chief.firebaseapp.com",
+    databaseURL: "https://anark-chief.firebaseio.com",
+    projectId: "anark-chief",
+    storageBucket: "",
+    messagingSenderId: "463728126114"
+  };
+        firebase.initializeApp(config);
+        // FirebaseUI config.
+        var uiConfig = {
+            callbacks: {
+                signInSuccess: function (currentUser, credential, redirectUrl) {
+                    // Do something.
+                    // Return type determines whether we continue the redirect automatically
+                    // or whether we leave that to developer to handle.
+                    return true;
+                },
+                uiShown: function () {
+                    // The widget is rendered.
+                    // Hide the loader.
+                    document.getElementById('loader').style.display = 'none';
+                }
+            },
+            credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
+            // Query parameter name for mode.
+            queryParameterForWidgetMode: 'mode',
+            // Query parameter name for sign in success url.
+            queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
+            // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+            signInFlow: 'popup',
+            signInSuccessUrl: '/home.html',
+            signInOptions: [
+                // Leave the lines as is for the providers you want to offer your users.
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                {
+                    provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                    // Whether the display name should be displayed in the Sign Up page.
+                    requireDisplayName: true
+                }
+             
+            ]
+        };
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
+    <link rel="stylesheet" type="text/css" href="semantic.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Varela+Round');
+        body {
+            background-image: url('back.jpg') !important;
+            background-size: cover !important;
+            overflow: hidden;
+            font-family: 'Varela Round', sans-serif;
+        }
+        .center {
+            margin-top: 20vh;
+        }
+        .center .login-text {
+            text-align: center;
+            color: #fff;
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <p class="login-text">Welcome to Anark chief</p>
+        <div id="firebaseui-auth-container"></div>
+        <div id="loader">Loading...</div>
+    </div>
+</body>
+
+</html>
